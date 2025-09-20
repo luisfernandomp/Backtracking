@@ -1,3 +1,9 @@
+/*
+GRUPO
+
+NOME: LUIS FERNANDO DE MESQUITA PEREIRA RA: 10410686
+*/
+
 #include<string.h>
 #include<stdlib.h>
 #include<stdio.h>
