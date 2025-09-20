@@ -7,7 +7,6 @@ NOME: LUIS FERNANDO DE MESQUITA PEREIRA RA: 10410686
 #include<string.h>
 #include<stdlib.h>
 #include<stdio.h>
-#include<locale.h>
 
 #define CHAVE '*'
 #define ANDAR_HORIZONTAL 'H'
@@ -23,8 +22,8 @@ int verificar_caminho(char** v, int** aux, int linha, int coluna, int q_linhas, 
 /// <param name="buffer">Ponteiro de char</param>
 /// <param name="tamanho">Tamanho do buffer</param>
 /// <returns>Um inteiro (1 - sucesso, 0 - erro)</returns>
-int ler_linha(char* buffer, size_t tamanho) {
-	if (fgets(buffer, tamanho, stdin) == NULL) {
+int ler_linha(char* buffer, size_t tamanho, FILE *fp) {
+	if (fgets(buffer, tamanho, fp) == NULL) {
 		printf("Erro na leitura da linha.\n");
 		return 0;
 	}
@@ -55,8 +54,16 @@ void desalocar_recursos(char** s, int** v, int n) {
 	free(s);
 }
 
-int main(void) {
-	setlocale(LC_ALL, "pt_BR");
+int main(int argc, char* argv[]) {
+	FILE* fp = NULL;
+	
+	if (argc >= 2) {
+		fp = fopen(argv[1], "r");
+		if (!fp) {
+			printf("Erro: nao foi possivel abrir o arquivo '%s'\n", argv[1]);
+			return 1;
+		}
+	}
 
 	char buffer_linha[MAX_LINHA];
 	int andares = 0, linha_inicial = 0, coluna_inicial = 0;
@@ -64,7 +71,7 @@ int main(void) {
 	int** aux;
 	size_t corredores = 0;
 
-	if (!ler_linha(buffer_linha, sizeof(buffer_linha))){
+	if (!ler_linha(buffer_linha, sizeof(buffer_linha), fp)){
 		return 1;
 	}
 
@@ -73,7 +80,7 @@ int main(void) {
 	aux = calloc(andares, sizeof(int*));
 
 	for (int i = 0; i < andares; i++) {
-		if (!ler_linha(buffer_linha, sizeof(buffer_linha))) {
+		if (!ler_linha(buffer_linha, sizeof(buffer_linha), fp)) {
 			return 1;
 		}
 
@@ -92,7 +99,7 @@ int main(void) {
 		strcpy(predio[i], buffer_linha);
 	}
 
-	if (!ler_linha(buffer_linha, sizeof(buffer_linha))) {
+	if (!ler_linha(buffer_linha, sizeof(buffer_linha), fp)) {
 		return 1;
 	}
 
@@ -104,10 +111,10 @@ int main(void) {
 	int resultado = encontrar_chave(predio, aux, linha_inicial, coluna_inicial, andares, corredores);
 
 	if (resultado) {
-		printf("Chave encontrada no Edifício João Calvino!\n");
+		printf("Chave encontrada no Edificio Joao Calvino!\n");
 	}
 	else {
-		printf("Não conseguimos encontrar a chave no Edifício João Calvino.");
+		printf("Não conseguimos encontrar a chave no Edificio Joao Calvino.");
 	}
 
 	desalocar_recursos(predio, aux, andares);
