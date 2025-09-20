@@ -57,12 +57,15 @@ void desalocar_recursos(char** s, int** v, int n) {
 int main(int argc, char* argv[]) {
 	FILE* fp = NULL;
 	
-	if (argc >= 2) {
-		fp = fopen(argv[1], "r");
-		if (!fp) {
-			printf("Erro: nao foi possivel abrir o arquivo '%s'\n", argv[1]);
-			return 1;
-		}
+	if (argc < 2) {
+		printf("Erro: é necessário passar um arquivo");
+		return 1;
+	}
+
+	fp = fopen(argv[1], "r");
+	if (!fp) {
+		printf("Erro: nao foi possivel abrir o arquivo '%s'\n", argv[1]);
+		return 1;
 	}
 
 	char buffer_linha[MAX_LINHA];
