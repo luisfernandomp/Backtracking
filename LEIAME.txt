@@ -1,0 +1,6 @@
+NOME: LUIS FERNANDO DE MESQUITA PEREIRA RA: 10410686
+
+Para executar o projeto
+- Passar o nome do arquivo .txt na execução
+Ex.: ./main teste.txt
+Obs.: o arquivo deve estar na mesma pasta do executável
